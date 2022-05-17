@@ -15,6 +15,11 @@
 	<description>For Products Data Service</description>
 	<properties>
 		<java.version>11</java.version>
+		<swagger.version>3.0.0</swagger.version>
+		<swagger.ui.version>2.9.2</swagger.ui.version>
+		<modelmapper.version>3.1.0</modelmapper.version>
+		<jdis.mock.version>1.0.2</jdis.mock.version>
+		<junit.version>4.12</junit.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,12 +39,12 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
-			<version>3.0.0</version>
+			<version>${swagger.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
-			<version>2.9.2</version>
+			<version>${swagger.ui.version}</version>
 		</dependency>
 		<!-- End of Swagger UI -->
 		<!-- Redis -->
@@ -54,8 +59,8 @@
 		<dependency>
 			<groupId>com.github.fppt</groupId>
 			<artifactId>jedis-mock</artifactId>
-			<version>1.0.2</version>
-			<scope>runtime</scope>
+			<version>${jdis.mock.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<!-- End of Redis -->
 		<dependency>
@@ -66,12 +71,18 @@
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>3.1.0</version>
+			<version>${modelmapper.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
@@ -91,5 +102,36 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>sonar</id>
+			<properties>
+				<!-- Optional URL to server. Default value is http://localhost:9000 -->
+				<sonar.organization>adisaaa23</sonar.organization>
+				<sonar.login>c68088e13914aa6135d3a9a15a5444727fe8b578</sonar.login>
+				<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+				<sonar.coverage.exclusions>
+					**/component/*.java, **/component/**/*.java,
+					**/config/*.java, **/config/**/*.java, **/config/**/**/*.java, **/config/**/**/**/*.java,
+					**/domain/*.java, **/domain/**/*.java, **/domain/**/**/*.java, **/domain/**/**/**/*.java,
+					**/exception/*.java, **/exception/**/*.java
+					**/repository/*.java, **/repository/**/*.java
+					**/util/*.java, **/util/**/*.java
+				</sonar.coverage.exclusions>
+				<sonar.sources>src/main/java</sonar.sources>
+				<sonar.java.source>11</sonar.java.source>
+				<sonar.binaries>target/classes</sonar.binaries>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonarsource.scanner.maven</groupId>
+						<artifactId>sonar-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>

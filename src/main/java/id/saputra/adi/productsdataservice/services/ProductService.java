@@ -33,7 +33,7 @@ public class ProductService implements CrudBase {
     @Override
     @Transactional
     @CachePut(value = CACHE_NAME, keyGenerator = "customerKeyGenerator")
-    public Object create(Object objRq) {
+    public ProductDao create(Object objRq) {
         log.info("Starting to create Product ...");
         if (Objects.isNull(objRq)){
             throw new ApplicationException(MESSAGE_REQ_INCOMPLETE, HttpStatus.BAD_REQUEST);
@@ -53,7 +53,7 @@ public class ProductService implements CrudBase {
     @Override
     @Transactional
     @CachePut(value = CACHE_NAME, keyGenerator = "customerKeyGenerator")
-    public Object update(Object objRq) {
+    public ProductDao update(Object objRq) {
         log.info("Starting update data Product customer ....");
         ProductDto productDto = (ProductDto) objRq;
         if (Objects.isNull(productDto) || Objects.isNull(productDto.getCode())){
@@ -73,7 +73,7 @@ public class ProductService implements CrudBase {
     @Override
     @Transactional
     @CachePut(value = CACHE_NAME, keyGenerator = "customerKeyGenerator")
-    public Object delete(Object objRq) {
+    public ProductDao delete(Object objRq) {
         log.info("Starting soft delete data Product ...");
         ProductDto productDto = (ProductDto) objRq;
         if (Objects.isNull(productDto) || Objects.isNull(productDto.getCode())){
@@ -102,7 +102,7 @@ public class ProductService implements CrudBase {
 
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = "customerKeyGenerator")
-    public Object showDetail(String code) {
+    public ProductDao showDetail(String code) {
         log.info("Starting get detail data Product ...");
         if (Objects.isNull(code)){
             throw new ApplicationException(MESSAGE_REQ_INCOMPLETE, HttpStatus.BAD_REQUEST);
@@ -118,7 +118,7 @@ public class ProductService implements CrudBase {
     }
 
     @Cacheable(value = CACHE_NAME, keyGenerator = "customerKeyGenerator")
-    public Object search(SearchRequestDto searchRequestDto) {
+    public List<ProductRiskDto> search(SearchRequestDto searchRequestDto) {
         log.info("Starting search data Product ...");
         if (Objects.isNull(searchRequestDto)){
             throw new ApplicationException(MESSAGE_REQ_INCOMPLETE, HttpStatus.BAD_REQUEST);
