@@ -97,7 +97,7 @@ public class ProductService implements CrudBase {
         log.info("Starting get all data Product ...");
         List<ProductDao> productDaos = productRepository.findAll();
         log.info("Starting get all data Product successfully ...");
-        return TransformUtil.transform(productDaos, new ProductDao());
+        return TransformUtil.transform(productDaos, new ProductDto());
     }
 
     @Override
